@@ -1,4 +1,4 @@
-# 🚀 Portfolio - Adilson Rafael
+# Portfolio - Adilson Rafael
 
 <div align="center">
 
@@ -10,11 +10,11 @@
 
 **Portfolio profissional desenvolvido com Flask - Design moderno e responsivo**
 
-[🌐 Site Online](#) • [📧 Contato](mailto:adilsonrafael847@gmail.com)
+[ Site Online](#) • [ Contato](mailto:adilsonrafael847@gmail.com)
 
 </div>
 
-## ✨ Características
+## Características
 
 - ✅ **Design moderno** e responsivo
 - ✅ **Sistema de contatos** integrado
@@ -23,10 +23,10 @@
 - ✅ **Animações suaves** e interface intuitiva
 - ✅ **Otimizado para mobile** e desktop
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologia Utilizada
 
 ### Backend
-- **Python** 🐍
+- **Python** 
 - **Flask** - Framework web
 - **Jinja2** - Templates dinâmicos
 
@@ -39,18 +39,28 @@
 ### Hospedagem
 - **Render.com** / **Railway.app** - Deploy e hosting
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 meu-portfolio-flask/
-├──app.py                 # Aplicação Flask principal
-├──requirements.txt       # Dependências Python
-├──runtime.txt           # Versão do Python
-├──README.md             # Este arquivo
-├──.gitignore           # Arquivos ignorados pelo Git
-├──templates/           # Templates HTML
-│├── index.html      # Página principal
-│└── admin.html      # Painel administrativo
-└──static/             # Arquivos estáticos
-└── images/         # Imagens e assets
-└── foto_perfil.jpg
 
+├──app.py
+
+├──requirements.txt
+
+├──runtime.txt
+
+├──README.md
+
+├──.gitignore
+
+├──templates/
+
+│├── index.html
+
+│└── admin.html
+
+└──static/
+
+└── images/
+
+└── foto_perfil.jpg
