@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Mensagens - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .mensagem-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .mensagem-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .mensagem-card.lida {
+            opacity: 0.8;
+            border-left-color: #28a745;
+        }
+
+        .mensagem-card.respondida {
+            border-left-color: #17a2b8;
+        }
+
+        .mensagem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .mensagem-info {
+            flex: 1;
+        }
+
+        .mensagem-nome {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .mensagem-email {
+            color: #667eea;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .mensagem-data {
+            color: #666;
+            font-size: 0.8rem;
+            text-align: right;
+        }
+
+        .mensagem-texto {
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .resposta-section {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .resposta-header {
+            display: flex;
+            justify-content: space-between;
+            color: #0c5460;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .mensagem-texto {
+    color: #555;
+    line-height: 1.6;
+    margin: 15px 0;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    
+    /* 🔥 ADICIONE ESTAS 3 LINHAS: */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+        .mensagem-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-lida { background: #28a745; }
+        .btn-responder { background: #17a2b8; }
+        .btn-excluir { background: #dc3545; }
+        .btn-voltar { background: #6c757d; }
+        .btn-atualizar { background: #ffc107; color: #000; }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-nova { background: #dc3545; color: white; }
+        .status-lida { background: #28a745; color: white; }
+        .status-respondida { background: #17a2b8; color: white; }
+
+        .flash-messages { margin-bottom: 20px; }
+        .flash-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .flash-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        /* MODAL DE RESPOSTA */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .navbar { padding: 10px 15px; }
+            .mensagem-header { flex-direction: column; }
+            .mensagem-data { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR FIXA -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-code"></i>
+            Painel Admin - Adilson
+        </div>
+        <div class="navbar-actions">
+            <a href="/" class="btn btn-voltar">
+                <i class="fas fa-home"></i> Portfolio
+            </a>
+            <button onclick="window.location.reload()" class="btn btn-atualizar">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Mensagens Flash -->
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- CABEÇALHO DA PÁGINA -->
+        <div class="page-header">
+            <h1><i class="fas fa-envelope"></i> Mensagens Recebidas</h1>
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-number">{{ mensagens|length }}</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ mensagens|selectattr('respondida')|list|length }}</div>
+                    <div class="stat-label">Respondidas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ mensagens|rejectattr('lida')|list|length }}</div>
+                    <div class="stat-label">Novas</div>
+                </div>
+            </div>
+        </div>
+
+        {% if mensagens %}
+            <div class="mensagens-lista">
+                {% for msg in mensagens %}
+                <div class="mensagem-card {% if msg.respondida %}respondida{% elif msg.lida %}lida{% endif %}" id="mensagem-{{ msg.id }}">
+                    <div class="mensagem-header">
+                        <div class="mensagem-info">
+                            <div class="mensagem-nome">
+                                {{ msg.nome }}
+                                <span class="status-badge {% if msg.respondida %}status-respondida{% elif msg.lida %}status-lida{% else %}status-nova{% endif %}">
+                                    {% if msg.respondida %}RESPONDIDA{% elif msg.lida %}LIDA{% else %}NOVA{% endif %}
+                                </span>
+                            </div>
+                            <div class="mensagem-email">{{ msg.email }}</div>
+                        </div>
+                        <div class="mensagem-data">{{ msg.data_envio }}</div>
+                    </div>
+                    
+                    <div class="mensagem-texto">{{ msg.mensagem }}</div>
+
+                    <!-- EXIBIR RESPOSTAS EXISTENTES -->
+                    {% for resposta in respostas %}
+                        {% if resposta.mensagem_id == msg.id %}
+                        <div class="resposta-section">
+                            <div class="resposta-header">
+                                <strong>Sua resposta:</strong>
+                                <span>{{ resposta.data_resposta }}</span>
+                            </div>
+                            <div class="resposta-texto">{{ resposta.resposta }}</div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <div class="mensagem-actions">
+                        {% if not msg.lida %}
+                        <a href="/admin/mensagem/{{ msg.id }}/lida" class="btn btn-lida">
+                            <i class="fas fa-check"></i> Marcar como Lida
+                        </a>
+                        {% endif %}
+                        
+                        {% if not msg.respondida %}
+                        <button class="btn btn-responder" onclick="abrirModalResposta({{ msg.id }}, '{{ msg.nome }}', '{{ msg.email }}')">
+                            <i class="fas fa-reply"></i> Responder
+                        </button>
+                        {% endif %}
+                        
+                        <a href="/admin/mensagem/{{ msg.id }}/excluir" class="btn btn-excluir" 
+                           onclick="return confirm('Tem certeza que deseja excluir esta mensagem?')">
+                            <i class="fas fa-trash"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 50px; color: #666;">
+                <i class="fas fa-inbox" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                <h3>Nenhuma mensagem ainda</h3>
+                <p>As mensagens do formulário de contato aparecerão aqui.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- MODAL DE RESPOSTA -->
+    <div id="modalResposta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-reply"></i> Responder Mensagem</h3>
+                <button class="close-modal" onclick="fecharModal()">&times;</button>
+            </div>
+            <form action="/enviar_resposta" method="POST">
+                <input type="hidden" id="resposta_mensagem_id" name="mensagem_id">
+                
+                <div class="form-group">
+                    <label>Para:</label>
+                    <input type="text" id="resposta_destinatario" name="destinatario" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="resposta_email" name="email" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sua resposta:</label>
+                    <textarea id="resposta_texto" name="resposta_texto" placeholder="Digite sua resposta aqui..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn" style="background: #17a2b8;">
+                        <i class="fas fa-paper-plane"></i> Enviar Resposta
+                    </button>
+                    <button type="button" class="btn btn-voltar" onclick="fecharModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // MODAL DE RESPOSTA
+        function abrirModalResposta(mensagemId, nome, email) {
+            document.getElementById('resposta_mensagem_id').value = mensagemId;
+            document.getElementById('resposta_destinatario').value = nome;
+            document.getElementById('resposta_email').value = email;
+            document.getElementById('modalResposta').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalResposta').style.display = 'none';
+        }
+
+        // Fechar modal clicando fora
+        document.getElementById('modalResposta').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        // Auto-refresh a cada 30 segundos se houver mensagens novas
+        {% if mensagens and mensagens|rejectattr('lida')|list|length > 0 %}
+        setTimeout(() => {
+            window.location.reload();
+        }, 30000);
+        {% endif %}
+    </script>
+</body>
+</html>
