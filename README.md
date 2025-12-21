@@ -8,12 +8,6 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-Entendi! Você quer refazer o README do seu repositório **Portfolio-Adilson_Rafael** deixando-o mais profissional, objetivo e **sem emojis** ou elementos excessivamente decorativos. Aqui vai um modelo limpo, claro e direto para um portfólio de desenvolvedor:
-
----
-
-# Portfolio - Adilson Rafael
-
 Este repositório contém o código-fonte do meu portfólio profissional, desenvolvido em Python com Flask.
 
 ## Sobre o Projeto
