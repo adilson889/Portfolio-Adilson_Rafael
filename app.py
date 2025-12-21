@@ -116,7 +116,7 @@ def enviar_resposta():
             mensagem_original['respondida'] = True
             mensagem_original['lida'] = True
             
-            flash(f'✅ Resposta enviada para {mensagem_original["nome"]}!', 'success')
+            flash(f' Resposta enviada para {mensagem_original["nome"]}!', 'success')
             print(f"📤 RESPOSTA ENVIADA: Para {mensagem_original['nome']}")
         
         return redirect('/admin/mensagens')
