@@ -74,7 +74,3 @@ portfolio-flask/
 ## Contato
 
 Entre em contato pelo email: [adilsonrafael847@gmail.com](mailto:adilsonrafael847@gmail.com)
-
----
-
-Se quiser que eu já atualize este README no seu repositório ou queira fazer ajustes/personalizações extras, me avise!
